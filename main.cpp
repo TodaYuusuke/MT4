@@ -3,6 +3,8 @@
 
 const char kWindowTitle[] = "LE2B_14_トダユウスケ";
 
+using namespace LWP::Math;
+
 // Windowsアプリでのエントリーポイント(main関数)
 int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
@@ -12,6 +14,11 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	// キー入力結果を受け取る箱
 	char keys[256] = {0};
 	char preKeys[256] = {0};
+
+	// ** 変数宣言 ** //
+	Vector3 axis = Vector3{ 1.0f,1.0f,1.0f }.Normalize();
+	float angle = 0.44f;
+	Matrix4x4 rotateMatrix = Matrix4x4::CreateRotateAxisAngle(axis, angle);
 
 	// ウィンドウの×ボタンが押されるまでループ
 	while (Novice::ProcessMessage() == 0) {
@@ -33,6 +40,9 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		///
 		/// ↓描画処理ここから
 		///
+
+		// 描画
+		rotateMatrix.DrawDisplay("rotateMatrix" ,0 ,0);
 
 		///
 		/// ↑描画処理ここまで

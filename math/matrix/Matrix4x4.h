@@ -26,7 +26,8 @@ namespace LWP::Math {
 		Matrix4x4 operator*(const float& other) const;
 		friend Matrix4x4 operator*(float scalar, const Matrix4x4& vec) { return vec * scalar; }
 
-
+		// *** 画面に表示 *** //
+		void DrawDisplay(const char* label, int posX, int posY);
 
 		// *** 任意の行列を返す関数 *** //
 
@@ -79,5 +80,8 @@ namespace LWP::Math {
 
 		// 座標変換
 		static Vector3 TransformCoord(const Vector3& vector, const Matrix4x4& matrix);
+
+		// 任意軸回転行列の作成
+		static Matrix4x4 CreateRotateAxisAngle(const Vector3& axis, float angle);
 	};
 }

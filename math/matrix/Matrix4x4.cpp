@@ -1,4 +1,5 @@
 #include "Matrix4x4.h"
+#include "Novice.h"
 #include "../vector/Vector3.h"
 
 using namespace LWP::Math;
@@ -51,7 +52,14 @@ Matrix4x4 Matrix4x4::operator*(const float& other) const {
 	return result;
 }
 
-// *** 任意の行列を返す関数 *** //
+void Matrix4x4::DrawDisplay(const char* label, int posX, int posY) {
+	const int kRowSize = 20;	// 縦幅
+	
+	Novice::ScreenPrintf(posX, posY, label);
+	for (int y = 0; y < 4; y++) {
+		Novice::ScreenPrintf(posX, posY + (kRowSize * (y + 1)), "%6.3f  %6.3f  %6.3f  %6.3f", m[y][0], m[y][1], m[y][2], m[y][3]);
+	}
+}
 
 // 行列式を返す関数
 float Matrix4x4::Determinant() {
@@ -317,5 +325,42 @@ Vector3 Matrix4x4::TransformCoord(const Vector3& vector, const Matrix4x4& matrix
 	result.x /= w;
 	result.y /= w;
 	result.z /= w;
+	return result;
+}
+
+Matrix4x4 Matrix4x4::CreateRotateAxisAngle(const Vector3& axis, float radian) {
+	// 拡大縮小
+	Matrix4x4 s{};
+	s.m[0][0] = std::cos(radian);
+	s.m[1][1] = std::cos(radian);
+	s.m[2][2] = std::cos(radian);
+
+	// ベクトル射影
+	Matrix4x4 p{};
+	p.m[0][0] = axis.x * axis.x;
+	p.m[0][1] = axis.x * axis.y;
+	p.m[0][2] = axis.x * axis.z;
+	p.m[1][0] = axis.y * axis.x;
+	p.m[1][1] = axis.y * axis.y;
+	p.m[1][2] = axis.y * axis.z;
+	p.m[2][0] = axis.z * axis.x;
+	p.m[2][1] = axis.z * axis.y;
+	p.m[2][2] = axis.z * axis.z;
+	p = (1.0f - std::cos(radian)) * p;
+
+	// クロス積
+	Matrix4x4 c{};
+	c.m[0][1] = -axis.z;
+	c.m[0][2] = axis.y;
+	c.m[1][0] = axis.z;
+	c.m[1][2] = -axis.x;
+	c.m[2][0] = -axis.y;
+	c.m[2][1] = axis.x;
+	c = (-1 * std::sin(radian)) * c;
+
+
+	// 結果
+	Matrix4x4 result = s + p + c;
+	result.m[3][3] = 1.0f;
 	return result;
 }
