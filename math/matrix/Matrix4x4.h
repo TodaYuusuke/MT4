@@ -83,5 +83,7 @@ namespace LWP::Math {
 
 		// 任意軸回転行列の作成
 		static Matrix4x4 CreateRotateAxisAngle(const Vector3& axis, float angle);
+		// ある方向からある方向への回転
+		static Matrix4x4 DirectionToDirection(const Vector3& from, const Vector3& to);
 	};
 }
