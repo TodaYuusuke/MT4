@@ -13,6 +13,7 @@ namespace LWP::Math {
 		float y;
 		float z;
 
+
 		// *** オペーレーターオーバーロード *** //
 
 		// Vector3 Add(+) Vector3

@@ -80,7 +80,7 @@ xcopy C:\KamataEngine\DirectXGame\Resources "$(OutDirFullPath)NoviceResources" /
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
-      <WarningLevel>Level4</WarningLevel>
+      <WarningLevel>Level3</WarningLevel>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
@@ -118,6 +118,7 @@ xcopy C:\KamataEngine\DirectXGame\Resources "$(OutDirFullPath)NoviceResources" /
     <ClCompile Include="main.cpp" />
     <ClCompile Include="math\matrix\Matrix3x3.cpp" />
     <ClCompile Include="math\matrix\Matrix4x4.cpp" />
+    <ClCompile Include="math\Quaternion.cpp" />
     <ClCompile Include="math\vector\Vector2.cpp" />
     <ClCompile Include="math\vector\Vector3.cpp" />
     <ClCompile Include="math\vector\Vector4.cpp" />
@@ -152,6 +153,7 @@ xcopy C:\KamataEngine\DirectXGame\Resources "$(OutDirFullPath)NoviceResources" /
     <ClInclude Include="C:\KamataEngine\Adapter\Novice.h" />
     <ClInclude Include="math\matrix\Matrix3x3.h" />
     <ClInclude Include="math\matrix\Matrix4x4.h" />
+    <ClInclude Include="math\Quaternion.h" />
     <ClInclude Include="math\vector\Vector2.h" />
     <ClInclude Include="math\vector\Vector3.h" />
     <ClInclude Include="math\vector\Vector4.h" />
