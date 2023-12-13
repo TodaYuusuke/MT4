@@ -1,5 +1,8 @@
 #include "Vector3.h"
 #include "../matrix/Matrix4x4.h"
+#include "../Quaternion.h"
+#include <string>
+#include <Novice.h>
 
 using namespace LWP::Math;
 
@@ -58,6 +61,12 @@ Vector3 Vector3::Normalize() {
 	return norm;
 }
 
+Vector3 Vector3::Rotate(const Quaternion& quaternion) {
+	Quaternion vecQ{ x,y,z,0.0f };
+	Quaternion result = quaternion * vecQ * quaternion.Conjugate().Normalize();
+	return result.xyz();
+}
+
 // *** 静的なメンバ関数 *** //
 
 /// 3次元ベクトルの内積を求める
@@ -73,4 +82,9 @@ Vector3 Vector3::Cross(const Vector3& v1, const Vector3& v2) {
 	result.z = v1.x * v2.y - v1.y * v2.x;
 
 	return result;
+}
+
+void Vector3::DrawDisplay(const char* label, int posX, int posY) {
+	std::string str = "%6.2f, %6.2f, %6.2f       :" + static_cast<std::string>(label);
+	Novice::ScreenPrintf(posX, posY, str.c_str(), x, y, z);
 }

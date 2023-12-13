@@ -1,6 +1,7 @@
 #include "Matrix4x4.h"
 #include "Novice.h"
 #include "../vector/Vector3.h"
+#include "../Quaternion.h"
 
 using namespace LWP::Math;
 
@@ -303,6 +304,24 @@ Matrix4x4 Matrix4x4::CreateLookAtMatrix(const Vector3& eye, const Vector3& at, c
 	result.m[3][3] = 1.0f;
 
 	return result;
+}
+
+Matrix4x4 Matrix4x4::CreateRotateMatrix(const Quaternion& q) {
+	return {
+		(q.w*q.w) + (q.x*q.x) - (q.y*q.y) - (q.z*q.z),
+		2.0f * (q.x*q.y + q.w*q.z),
+		2.0f * (q.x*q.z - q.w*q.y),
+		0.0f,
+		2.0f * (q.x*q.y - q.w*q.z),
+		(q.w*q.w) - (q.x*q.x) + (q.y*q.y) - (q.z*q.z),
+		2.0f * (q.y*q.z + q.w*q.x),
+		0.0f,
+		2.0f * (q.x*q.z + q.w*q.y),
+		2.0f * (q.y*q.z - q.w*q.x),
+		(q.w*q.w) - (q.x*q.x) - (q.y*q.y) + (q.z*q.z),
+		0.0f,
+		0.0f,0.0f,0.0f,1.0f
+	};
 }
 
 // 単位行列作成

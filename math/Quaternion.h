@@ -22,22 +22,22 @@ namespace LWP::Math {
 		/// <summary>
 		/// 共役クォータニオンを返す
 		/// </summary>
-		Quaternion Conjugate();
+		Quaternion Conjugate() const;
 
 		/// <summary>
 		/// クォータニオンのNormを返す
 		/// </summary>
-		float Norm();
+		float Norm() const;
 
 		/// <summary>
 		/// 正規化したクォータニオンを返す
 		/// </summary>
-		Quaternion Normalize();
+		Quaternion Normalize() const;
 
 		/// <summary>
 		/// 逆クォータニオンを返す
 		/// </summary>
-		Quaternion Inverse();
+		Quaternion Inverse() const;
 
 
 		/// <summary>
@@ -52,6 +52,12 @@ namespace LWP::Math {
 		/// 単位クォータニオンを返す
 		/// </summary>
 		static Quaternion Identity();
+
+		/// <summary>
+		/// 任意軸回転を表すクォータニオンを生成して返す
+		/// </summary>
+		static Quaternion CreateRotateAxisAngleQuaternion(const Vector3& axis, float angle);
+
 
 	public: // *** オペーレーターオーバーロード *** //
 

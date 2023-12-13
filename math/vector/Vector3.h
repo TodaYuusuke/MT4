@@ -6,6 +6,7 @@
 /// </summary>
 namespace LWP::Math {
 	class Matrix4x4;
+	class Quaternion;
 
 	class Vector3 final {
 	public:
@@ -49,6 +50,11 @@ namespace LWP::Math {
 		/// <returns>正規化されたベクトル</returns>
 		Vector3 Normalize();
 
+		/// <summary>
+		/// ベクトルをクォータニオンで回転させた結果のベクトルを返す
+		/// </summary>
+		Vector3 Rotate(const Quaternion& quaternion);
+
 
 		// *** 静的なメンバ関数 *** //
 
@@ -68,5 +74,12 @@ namespace LWP::Math {
 		/// <returns>クロス積</returns>
 		static Vector3 Cross(const Vector3& v1, const Vector3& v2);
 
+
+		/// <summary>
+		/// 値を画面に表示
+		/// </summary>
+		void DrawDisplay(const char* label, int posX, int posY);
+
+	public: // ** 生成系関数 ** //
 	};
 }

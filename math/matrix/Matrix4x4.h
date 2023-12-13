@@ -7,6 +7,7 @@
 /// </summary>
 namespace LWP::Math {
 	class Vector3;
+	class Quaternion;
 
 	class Matrix4x4 final {
 	public:
@@ -74,6 +75,13 @@ namespace LWP::Math {
 		static Matrix4x4 CreateLookAtMatrix(const Vector3& eye, const Vector3& at, const Vector3& up);
 
 #pragma endregion
+
+
+		/// <summary>
+		/// クォータニオンから回転行列を生成して返す
+		/// </summary>
+		static Matrix4x4 CreateRotateMatrix(const Quaternion& quaternion);
+
 
 		// 単位行列の作成
 		static Matrix4x4 CreateIdentity4x4();
