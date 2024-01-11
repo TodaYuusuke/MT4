@@ -6,6 +6,19 @@
 
 using namespace LWP::Math;
 
+Quaternion Quaternion::operator+(const Quaternion& other) const {
+	return { x + other.x, y + other.y, z + other.z, w + other.w };
+}
+Quaternion& Quaternion::operator+=(const Quaternion& other) {
+	return *this = *this + other;
+}
+Quaternion Quaternion::operator*(const float& other) const {
+	return { x * other, y * other, z * other, w * other };
+}
+Quaternion& Quaternion::operator*=(const float& other) {
+	return *this = *this * other;
+}
+
 Vector3& Quaternion::xyz() { return *reinterpret_cast<Vector3*>(&x); }
 const Vector3& Quaternion::xyz() const { return *reinterpret_cast<const Vector3*>(&x); }
 
@@ -48,9 +61,33 @@ Quaternion Quaternion::Identity() {
 	return { 0.0f,0.0f,0.0f,1.0f };
 }
 
+float Quaternion::Dot(const Quaternion& q1, const Quaternion& q2) {
+	return (q1.x * q2.x) + (q1.y * q2.y) + (q1.z * q2.z);
+}
+
+
 Quaternion Quaternion::CreateRotateAxisAngleQuaternion(const Vector3& axis, float angle) {
 	Quaternion result{};
 	result.w = std::cos(angle / 2.0f);
 	result.xyz() = std::sin(angle / 2.0f) * axis;
 	return result;
+}
+
+Quaternion Quaternion::Slerp(Quaternion q1, Quaternion q2, float t) {
+	// 内積を求める
+	float dot = Dot(q1, q2);
+	if (dot < 0) {
+		q1 = q1 * -1.0f;
+		dot = -dot;
+	}
+
+	// なす角を求める
+	float theta = std::acos(dot);
+
+	// thetaを使って補間係数scale1とscale2を求める
+	float scale1 = std::sin((1.0f - t) * theta) / std::sin(theta);
+	float scale2 = std::sin(t * theta) / std::sin(theta);
+	
+	// それぞれの補間係数を利用して補間後のクォータニオンを求める
+	return scale1 * q1 + scale2 * q2;
 }

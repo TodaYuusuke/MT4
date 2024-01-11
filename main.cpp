@@ -16,12 +16,15 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	char preKeys[256] = {0};
 
 	// ** 変数宣言 ** //
-	Quaternion rotation = Quaternion::CreateRotateAxisAngleQuaternion(
-		Vector3{1.0f,0.4f,-0.2f}.Normalize(), 0.45f);
-	Vector3 pointY = { 2.1f,-0.9f,1.3f };
-	Matrix4x4 rotateMatrix = Matrix4x4::CreateRotateMatrix(rotation);
-	Vector3 rotateByQuaternion = pointY.Rotate(rotation);
-	Vector3 rotateByMatrix = pointY * rotateMatrix;
+	Quaternion rotation0 = Quaternion::CreateRotateAxisAngleQuaternion(Vector3{ 0.71f, 0.71f, 0.0f }, 0.3f);
+	Quaternion rotation1 = Quaternion::CreateRotateAxisAngleQuaternion(Vector3{ 0.71f, 0.0f, 0.71f }, 3.141592f);
+
+	Quaternion interpolater0 = Quaternion::Slerp(rotation0, rotation1, 0.0f);
+	Quaternion interpolater1 = Quaternion::Slerp(rotation0, rotation1, 0.3f);
+	Quaternion interpolater2 = Quaternion::Slerp(rotation0, rotation1, 0.5f);
+	Quaternion interpolater3 = Quaternion::Slerp(rotation0, rotation1, 0.7f);
+	Quaternion interpolater4 = Quaternion::Slerp(rotation0, rotation1, 1.0f);
+
 
 	// ウィンドウの×ボタンが押されるまでループ
 	while (Novice::ProcessMessage() == 0) {
@@ -45,10 +48,11 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		///
 
 		// 描画
-		rotation.DrawDisplay("rotation", 0, 0);
-		rotateMatrix.DrawDisplay("rotateMatrix", 0, 20);
-		rotateByQuaternion.DrawDisplay("rotateByQuaternion", 0, 120);
-		rotateByMatrix.DrawDisplay("rotateByMatrix", 0, 140);
+		interpolater0.DrawDisplay("interpolater0, Slerp(q0, q1, 0.0f)", 0, 0);
+		interpolater1.DrawDisplay("interpolater1, Slerp(q0, q1, 0.3f)", 0, 20);
+		interpolater2.DrawDisplay("interpolater2, Slerp(q0, q1, 0.5f)", 0, 40);
+		interpolater3.DrawDisplay("interpolater3, Slerp(q0, q1, 0.7f)", 0, 60);
+		interpolater4.DrawDisplay("interpolater4, Slerp(q0, q1, 1.0f)", 0, 80);
 
 
 		///
